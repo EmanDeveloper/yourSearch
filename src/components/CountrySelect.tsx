@@ -41,28 +41,38 @@ export default function CountrySelect({ onChange }: CountrySelectProps) {
             <input type="hidden" name="country" value={selected?.code || ""} />
 
             {/* Trigger Button */}
-            <button
-                type="button"
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full relative flex items-center justify-between bg-black/20 hover:bg-black/30 border border-white/10 rounded-xl py-3.5 pl-4 pr-4 text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all cursor-pointer text-left"
-            >
-                <div className="flex items-center gap-3">
-                    {selected ? (
-                        <>
-                            <img
-                                src={`https://flagcdn.com/w40/${selected.code.toLowerCase()}.png`}
-                                width="24"
-                                alt={selected.name}
-                                className="rounded-sm"
-                            />
-                            <span className="truncate">{selected.name}</span>
-                        </>
-                    ) : (
-                        <span className="text-zinc-500">Select your country</span>
-                    )}
-                </div>
-                <ChevronDown className={`w-4 h-4 text-zinc-500 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-            </button>
+          <button
+  type="button"
+  onClick={() => setIsOpen(!isOpen)}
+  className="w-full relative flex items-center justify-between bg-black/20 hover:bg-black/30 border border-white/10 rounded-xl py-3.5 pl-4 pr-4 text-zinc-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-transparent transition-all cursor-pointer text-left"
+>
+  <div className="flex items-center gap-3 min-w-0 flex-1">
+    {selected ? (
+      <>
+        <img
+          src={`https://flagcdn.com/w40/${selected.code.toLowerCase()}.png`}
+          width="24"
+          alt={selected.name}
+          className="rounded-sm flex-shrink-0"
+        />
+        <span className="truncate block flex-1">
+          {selected.name}
+        </span>
+      </>
+    ) : (
+      <span className="text-zinc-500 truncate">
+        Select your country
+      </span>
+    )}
+  </div>
+
+  <ChevronDown
+    className={`w-4 h-4 text-zinc-500 flex-shrink-0 transition-transform ${
+      isOpen ? "rotate-180" : ""
+    }`}
+  />
+</button>
+
 
             {/* Dropdown Menu */}
             {isOpen && (

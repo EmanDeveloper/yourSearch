@@ -1,97 +1,108 @@
-"use client"
-import CountrySelect from '../components/CountrySelect';
-import ProductTypeSelect from '../components/ProductTypeSelect';
-import PriceRange from '../components/PriceRange';
-import SubmitButton from '../components/SubmitButton';
-import { useState } from 'react';
+"use client";
 
+import CountrySelect from "../components/CountrySelect";
+import ProductTypeSelect from "../components/ProductTypeSelect";
+import PriceRange from "../components/PriceRange";
+import SubmitButton from "../components/SubmitButton";
+import { useState } from "react";
 
 export default function Home() {
-  const [currencySymbol, setCurrencySymbol] = useState('$');
+  const [currencySymbol, setCurrencySymbol] = useState("$");
 
   const handleCountryChange = (country: { code: string; name: string }) => {
     const code = country.code.toLowerCase();
-    let symbol = '$';
+    let symbol = "$";
 
     switch (code) {
-      case 'gb':
-      case 'uk':
-        symbol = '£';
+      case "gb":
+      case "uk":
+        symbol = "£";
         break;
-      case 'pk':
-        symbol = 'Rs';
+      case "pk":
+        symbol = "Rs";
         break;
-      case 'in':
-        symbol = '₹';
+      case "in":
+        symbol = "₹";
         break;
-      case 'fr':
-      case 'de':
-      case 'it':
-      case 'es':
-      case 'nl':
-      case 'be':
-      case 'pt':
-      case 'ie':
-      case 'gr':
-      case 'at':
-      case 'fi':
-      case 'sk':
-      case 'lu':
-      case 'si':
-      case 'mt':
-      case 'cy':
-      case 'ee':
-      case 'lv':
-      case 'lt':
-        symbol = '€';
+      case "fr":
+      case "de":
+      case "it":
+      case "es":
+      case "nl":
+      case "be":
+      case "pt":
+      case "ie":
+      case "gr":
+      case "at":
+      case "fi":
+      case "sk":
+      case "lu":
+      case "si":
+      case "mt":
+      case "cy":
+      case "ee":
+      case "lv":
+      case "lt":
+        symbol = "€";
         break;
       default:
-        symbol = '$';
+        symbol = "$";
     }
+
     setCurrencySymbol(symbol);
   };
 
   return (
-    <main className="min-h-screen w-full flex items-center justify-center bg-[#0a0a0a] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] p-4 font-sans text-zinc-100 selection:bg-purple-500/30">
-      <div className="absolute inset-0 -z-10 h-full w-full bg-[#0a0a0a] [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+    <main className="relative min-h-screen w-full overflow-hidden bg-[#0a0a0a] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] px-4 py-8 text-zinc-100">
 
-      <div className="w-full max-w-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="relative overflow-hidden rounded-2xl bg-zinc-900/40 backdrop-blur-xl border border-white/5 shadow-2xl p-8">
+      {/* Glow effects */}
+      <div className="absolute -top-24 -left-24 h-48 w-48 sm:h-64 sm:w-64 rounded-full bg-purple-500/10 blur-3xl" />
+      <div className="absolute -bottom-24 -right-24 h-48 w-48 sm:h-64 sm:w-64 rounded-full bg-blue-500/10 blur-3xl" />
 
-          {/* Glow effects */}
-          <div className="absolute -top-24 -left-20 h-64 w-64 rounded-full bg-purple-500/20 blur-3xl"></div>
-          <div className="absolute -bottom-24 -right-20 h-64 w-64 rounded-full bg-blue-500/20 blur-3xl"></div>
+      {/* Content Wrapper */}
+      <div className="relative mx-auto max-w-7xl">
 
-          {/* Header */}
-          <div className="relative mb-10 text-center">
-            <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-br from-white via-white/90 to-white/50 bg-clip-text text-transparent">
-              Find Your Tech
-            </h1>
-            <p className="mt-2 text-zinc-400 text-sm">
-              Search for the best deals on phones and laptops worldwide.
-            </p>
+        {/* Header */}
+        <div className="mb-10 text-center px-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-br from-white via-white/90 to-white/50 bg-clip-text text-transparent">
+            Find Your Tech
+          </h1>
+          <p className="mt-2 text-sm sm:text-base text-zinc-400">
+            Search for the best deals on phones and laptops worldwide.
+          </p>
+        </div>
+
+        {/* Form */}
+        <form
+          className="
+            grid grid-cols-1 gap-4
+            sm:grid-cols-2
+            lg:flex lg:flex-row lg:items-end
+          "
+        >
+          {/* Country */}
+          <div className="w-full lg:w-64 space-y-2">
+            <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">
+              Region
+            </label>
+            <CountrySelect onChange={handleCountryChange} />
           </div>
 
-          <form className="relative space-y-8">
-            {/* Country Selection */}
-            <div className="space-y-3">
-              <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">
-                Region
-              </label>
-              <CountrySelect onChange={handleCountryChange} />
-            </div>
-
-            {/* Product Type */}
+          {/* Product Type */}
+          <div className="w-full lg:w-48">
             <ProductTypeSelect />
+          </div>
 
-            {/* Price Range */}
+          {/* Price Range */}
+          <div className="w-full sm:col-span-2 lg:flex-1">
             <PriceRange currencySymbol={currencySymbol} />
+          </div>
 
-            {/* Submit Button */}
+          {/* Submit Button */}
+          <div className="w-full sm:col-span-2 lg:w-48">
             <SubmitButton />
-
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </main>
   );
