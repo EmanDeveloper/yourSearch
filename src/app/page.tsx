@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-[#0a0a0a] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] px-4 py-8 text-zinc-100">
+    <main className="relative min-h-screen w-full overflow-hidden px-4 py-8 ">
 
       {/* Glow effects */}
       <div className="absolute -top-24 -left-24 h-48 w-48 sm:h-64 sm:w-64 rounded-full bg-purple-500/10 blur-3xl" />
@@ -64,7 +64,7 @@ export default function Home() {
 
         {/* Header */}
         <div className="mb-10 text-center px-2">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-br from-white via-white/90 to-white/50 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             Find Your Tech
           </h1>
           <p className="mt-2 text-sm sm:text-base text-zinc-400">
@@ -82,7 +82,7 @@ export default function Home() {
         >
           {/* Country */}
           <div className="w-full lg:w-64 space-y-2">
-            <label className="text-xs font-semibold uppercase tracking-wider text-zinc-500 ml-1">
+            <label className="text-xs font-semibold uppercase tracking-wider ml-1">
               Region
             </label>
             <CountrySelect onChange={handleCountryChange} />
