@@ -2,7 +2,7 @@ export default function SubmitButton() {
     return (
         <button
             type="submit"
-            className="w-full h-[52px] group relative overflow-hidden rounded-xl bg-white text-black font-bold transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full h-[52px] group relative overflow-hidden rounded-xl border border-black/50 py-3.5 pl-4 pr-4 text-black font-bold transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer bg-blue-100"
         >
             <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <span className="relative flex items-center justify-center gap-2 group-hover:text-white transition-colors">

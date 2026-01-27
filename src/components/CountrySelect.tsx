@@ -44,7 +44,7 @@ export default function CountrySelect({ onChange }: CountrySelectProps) {
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full relative flex items-center justify-between border border-black/50 rounded-xl py-3.5 pl-4 pr-4  focus:outline-none focus:ring-2 focus:ring-blue/50 focus:border-transparent transition-all cursor-pointer text-left"
+                className="w-full relative flex items-center justify-between border border-black/50 rounded-xl py-3.5 pl-4 pr-4  focus:ring-2 focus:ring-blue/50 focus:border-transparent transition-all cursor-pointer text-left"
             >
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                     {selected ? (
