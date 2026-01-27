@@ -3,7 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Check, Smartphone, Laptop } from "lucide-react";
 
-export default function ProductTypeSelect() {
+interface ProductTypeSelectProps {
+    onChange?: (type: string) => void;
+}
+
+export default function ProductTypeSelect({ onChange }: ProductTypeSelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<string | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,6 +65,9 @@ export default function ProductTypeSelect() {
                                     onClick={() => {
                                         setSelected(option.id);
                                         setIsOpen(false);
+                                        if (onChange) {
+                                            onChange(option.id);
+                                        }
                                     }}
                                     className={`w-full flex items-center justify-between p-2 rounded-lg text-sm transition-colors ${selected === option.id
                                         ? "bg-black/20 text-black"

@@ -6,12 +6,27 @@ import PriceRange from "../components/PriceRange";
 import SubmitButton from "../components/SubmitButton";
 import { useState } from "react";
 import { handleCountryChange } from "../utils/countrySelect";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
   const [currencySymbol, setCurrencySymbol] = useState("$");
+  const [country, setCountry] = useState<{ code: string; name: string } | null>(null);
+  const [productType, setProductType] = useState<string>("");
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
 
-  const onCountryChange = (country: { code: string; name: string }) => {
-    handleCountryChange(country, setCurrencySymbol);
+  const onCountryChange = (selectedCountry: { code: string; name: string }) => {
+    setCountry(selectedCountry);
+    handleCountryChange(selectedCountry, setCurrencySymbol);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if(!country || !productType || !minPrice || !maxPrice){
+      toast.error("Please fill all the fields");
+      return;
+    }
   };
 
   return (
@@ -29,6 +44,7 @@ export default function Home() {
         </div>
 
         <form
+          onSubmit={handleSubmit}
           className="
             grid grid-cols-1 gap-4
             sm:grid-cols-2
@@ -43,10 +59,14 @@ export default function Home() {
           </div>
 
           <div className="w-full lg:w-48">
-            <ProductTypeSelect />
+            <ProductTypeSelect onChange={setProductType} />
           </div>
           <div className="w-full sm:col-span-2 lg:flex-1">
-            <PriceRange currencySymbol={currencySymbol} />
+            <PriceRange
+              currencySymbol={currencySymbol}
+              onMinChange={setMinPrice}
+              onMaxChange={setMaxPrice}
+            />
           </div>
 
           <div className="w-full sm:col-span-2 lg:w-48">

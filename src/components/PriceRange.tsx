@@ -1,8 +1,10 @@
 interface PriceRangeProps {
     currencySymbol: string;
+    onMinChange?: (value: string) => void;
+    onMaxChange?: (value: string) => void;
 }
 
-export default function PriceRange({ currencySymbol }: PriceRangeProps) {
+export default function PriceRange({ currencySymbol, onMinChange, onMaxChange }: PriceRangeProps) {
     return (
         <div className="space-y-3">
             <label className="text-xs font-semibold uppercase tracking-wider  ml-1">
@@ -16,6 +18,7 @@ export default function PriceRange({ currencySymbol }: PriceRangeProps) {
                     <input
                         type="number"
                         placeholder="Min"
+                        onChange={(e) => onMinChange?.(e.target.value)}
                         className="w-full border border-black/50 rounded-xl py-3.5 pl-10 pr-4 placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                 </div>
@@ -27,6 +30,7 @@ export default function PriceRange({ currencySymbol }: PriceRangeProps) {
                     <input
                         type="number"
                         placeholder="Max"
+                        onChange={(e) => onMaxChange?.(e.target.value)}
                         className="w-full border border-black/50 rounded-xl py-3.5 pl-10 pr-4 placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent transition-all [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     />
                 </div>

@@ -2,13 +2,19 @@ export default function SubmitButton() {
     return (
         <button
             type="submit"
-            className="w-full h-[52px] group relative overflow-hidden rounded-xl border border-black/50 py-3.5 pl-4 pr-4 text-black font-bold transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer bg-blue-100"
+            className="
+                w-full h-[52px] 
+                bg-blue-600 hover:bg-blue-700 active:bg-blue-800
+                text-white font-semibold
+                rounded-xl
+                transition-all duration-300
+                transform hover:scale-[1.02] active:scale-[0.98]
+                shadow-lg hover:shadow-xl
+                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                cursor-pointer
+            "
         >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <span className="relative flex items-center justify-center gap-2 group-hover:text-white transition-colors">
-                Search Products
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-            </span>
+            Search Products
         </button>
     );
 }
