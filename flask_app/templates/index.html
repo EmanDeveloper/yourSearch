@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search - Find Your Tech</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">Find Your Tech</h1>
+            <p class="subtitle">Search for the best deals on phones and laptops worldwide.</p>
+        </div>
+
+        <!-- Search Form -->
+        <form id="searchForm" class="search-form">
+            <!-- Country Select -->
+            <div class="form-group">
+                <label class="form-label">Region</label>
+                <div class="select-wrapper" id="countrySelectWrapper">
+                    <button type="button" class="select-trigger" id="countryTrigger">
+                        <span class="select-value" id="countryValue">Select your country</span>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="dropdown" id="countryDropdown">
+                        <div class="search-box">
+                            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" class="search-input" id="countrySearch" placeholder="Search country...">
+                        </div>
+                        <div class="options-list" id="countryOptions"></div>
+                    </div>
+                </div>
+                <input type="hidden" name="country" id="countryInput">
+                <input type="hidden" name="countryCode" id="countryCodeInput">
+            </div>
+
+            <!-- Product Type Select -->
+            <div class="form-group">
+                <label class="form-label">Product Type</label>
+                <div class="select-wrapper" id="productSelectWrapper">
+                    <button type="button" class="select-trigger" id="productTrigger">
+                        <span class="select-value" id="productValue">Select type</span>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="dropdown" id="productDropdown">
+                        <div class="options-list">
+                            <button type="button" class="option" data-value="phone">
+                                <svg class="option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                </svg>
+                                <span>Phone</span>
+                            </button>
+                            <button type="button" class="option" data-value="laptop">
+                                <svg class="option-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                    <line x1="2" y1="20" x2="22" y2="20"></line>
+                                </svg>
+                                <span>Laptop</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="productType" id="productTypeInput">
+            </div>
+
+            <!-- Price Range -->
+            <div class="form-group price-group">
+                <label class="form-label">Price Range</label>
+                <div class="price-inputs">
+                    <div class="price-input-wrapper">
+                        <span class="currency-symbol" id="currencySymbol">$</span>
+                        <input type="number" class="price-input" id="minPrice" name="minPrice" placeholder="Min" min="0">
+                    </div>
+                    <span class="price-separator">-</span>
+                    <div class="price-input-wrapper">
+                        <span class="currency-symbol" id="currencySymbol2">$</span>
+                        <input type="number" class="price-input" id="maxPrice" name="maxPrice" placeholder="Max" min="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group submit-group">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="btn-text">Search Products</span>
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+            </div>
+        </form>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Searching for products...</p>
+        </div>
+
+        <!-- Results Section -->
+        <div class="results-section" id="resultsSection">
+            <div class="results-header">
+                <h2 class="results-title">Results</h2>
+                <span class="results-count" id="resultsCount">0 products found</span>
+            </div>
+            <div class="products-grid" id="productsGrid"></div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toastContainer"></div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/countries.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
