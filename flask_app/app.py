@@ -3,7 +3,7 @@ import asyncio
 from playwright.async_api import async_playwright
 from scrapers.daraz import scrape_daraz
 from scrapers.priceoye import scrape_priceoye
-from scrapers.olx import scrape_olx
+
 
 app = Flask(__name__)
 
@@ -80,7 +80,7 @@ async def run_scraper(country_code: str, product_type: str, min_price: int, max_
                 # Run all Pakistani scrapers in parallel (Daraz, PriceOye, OLX)
                 results = await asyncio.gather(
                     scrape_daraz(page1, product_type, min_price, max_price),
-                    scrape_priceoye(page2, product_type, min_price, max_price)
+                    scrape_priceoye(page2, product_type, min_price, max_price),
                     return_exceptions=True
                 )
                 

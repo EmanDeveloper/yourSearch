@@ -42,8 +42,11 @@ next-env.d.ts
 
 # python
 .venv
+venv/
+**/venv/
 
 __pycache__
+**/__pycache__/
 .env
 .env.local
 .env.example
