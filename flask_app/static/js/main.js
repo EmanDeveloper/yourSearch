@@ -28,8 +28,13 @@ const submitBtn = document.getElementById('submitBtn');
 const loading = document.getElementById('loading');
 const resultsSection = document.getElementById('resultsSection');
 const resultsCount = document.getElementById('resultsCount');
+const cacheStatus = document.getElementById('cacheStatus');
+const refreshBtn = document.getElementById('refreshBtn');
 const productsGrid = document.getElementById('productsGrid');
 const toastContainer = document.getElementById('toastContainer');
+
+// Store last search params for refresh
+let lastSearchParams = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -152,6 +157,9 @@ function setupEventListeners() {
     
     // Form submission
     searchForm.addEventListener('submit', handleSubmit);
+    
+    // Refresh button
+    refreshBtn.addEventListener('click', handleRefresh);
 }
 
 // Toggle dropdown
@@ -195,6 +203,15 @@ async function handleSubmit(e) {
         return;
     }
     
+    // Store search params for refresh
+    lastSearchParams = {
+        country: selectedCountry.name,
+        countryCode: selectedCountry.code,
+        productType: selectedProductType,
+        minPrice,
+        maxPrice
+    };
+    
     // Show loading
     submitBtn.disabled = true;
     loading.classList.add('active');
@@ -206,13 +223,7 @@ async function handleSubmit(e) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                country: selectedCountry.name,
-                countryCode: selectedCountry.code,
-                productType: selectedProductType,
-                minPrice,
-                maxPrice
-            })
+            body: JSON.stringify(lastSearchParams)
         });
         
         const data = await response.json();
@@ -221,7 +232,8 @@ async function handleSubmit(e) {
             throw new Error(data.error || 'Something went wrong');
         }
         
-        showToast(`Found ${data.count} products!`, 'success');
+        const cacheMsg = data.cached ? '⚡ From cache' : '🔄 Fresh data';
+        showToast(`Found ${data.count} products! ${cacheMsg}`, 'success');
         displayResults(data);
         
     } catch (error) {
@@ -232,12 +244,60 @@ async function handleSubmit(e) {
     }
 }
 
+// Handle refresh button click
+async function handleRefresh() {
+    if (!lastSearchParams) {
+        showToast('Please search for products first', 'error');
+        return;
+    }
+    
+    // Show loading state
+    refreshBtn.disabled = true;
+    refreshBtn.classList.add('loading');
+    
+    try {
+        const response = await fetch('/api/refresh', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(lastSearchParams)
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to refresh');
+        }
+        
+        showToast(`Refreshed! Found ${data.count} products`, 'success');
+        displayResults(data);
+        
+    } catch (error) {
+        showToast(error.message, 'error');
+    } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.classList.remove('loading');
+    }
+}
+
 // Display results grouped by source
 function displayResults(data) {
     const grouped = data.grouped || {};
     const totalCount = data.count || 0;
+    const isCached = data.cached === true;
     
     resultsCount.textContent = `${totalCount} products found`;
+    
+    // Update cache status
+    cacheStatus.className = 'cache-status';
+    if (isCached) {
+        cacheStatus.classList.add('cached');
+        cacheStatus.textContent = `Cached • Expires in ${data.cache_expires_in || 'soon'}`;
+    } else {
+        cacheStatus.classList.add('fresh');
+        cacheStatus.textContent = 'Fresh data';
+    }
     
     if (totalCount === 0) {
         productsGrid.innerHTML = `
